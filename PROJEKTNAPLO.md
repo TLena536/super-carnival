@@ -3,9 +3,9 @@
 ## Csapat és munkamegosztás
 
 | Név vagy GitHub-felhasználónév | Vállalt feladatok és szerep | Saját menüfunkció |
-| --- | --- | --- |
-| … | … | … |
-| … | … | … |
+| Tasi Léna                      | Menü, kurzorvezérlés  | --- |
+| Sápi Timót                     | Nyomdák, betöltés     |  …  |
+
 
 ## Közös megállapodások
 
