@@ -1,0 +1,15 @@
+C:\Users\User\source\repos\PROJEKT\PROJEKT\bin\Debug\net10.0\PROJEKT.exe
+C:\Users\User\source\repos\PROJEKT\PROJEKT\bin\Debug\net10.0\PROJEKT.deps.json
+C:\Users\User\source\repos\PROJEKT\PROJEKT\bin\Debug\net10.0\PROJEKT.runtimeconfig.json
+C:\Users\User\source\repos\PROJEKT\PROJEKT\bin\Debug\net10.0\PROJEKT.dll
+C:\Users\User\source\repos\PROJEKT\PROJEKT\bin\Debug\net10.0\PROJEKT.pdb
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.AssemblyInfo.cs
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.dll
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\refint\PROJEKT.dll
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.pdb
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.genruntimeconfig.cache
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\ref\PROJEKT.dll
+C:\Users\User\source\repos\PROJEKT\PROJEKT\obj\Debug\net10.0\PROJEKT.csproj.Up2Date
