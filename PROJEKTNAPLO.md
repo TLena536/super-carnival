@@ -9,7 +9,7 @@
 
 ## Közös megállapodások
 
-- A rajzlap mérete és helye: 50x18, a konzol jobb oldalán
+- A rajzlap mérete és helye: 50x20, a konzol jobb oldalán
 - A két munkarész kapcsolódási pontja: A közös Allapot.cs fájlban tárolt adatokon keresztül.
 - A módosítások egyeztetése a main ágon: A módosításokat összehangoltuk, és folyamatos megbeszélés alapján végeztük.
 
