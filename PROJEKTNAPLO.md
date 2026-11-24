@@ -2,7 +2,7 @@
 
 **Projekt neve:** Konzolos Rajzoló (C# Console Application)  
 **Tantárgy / Osztály:** IKT projektek / 11.F osztály  
-**Fejlesztők / Páros:** [Tanuló 1 Neve] és [Tanuló 2 Neve]  
+**Fejlesztők / Páros:** Tasi Léna és Sápi Timót
 **Fejlesztési környezet:** Visual Studio 2022 / .NET 8.0 Console Application  
 
 ---
@@ -62,7 +62,7 @@ A közös munkát a `main` ágon végeztük megbízható és atomi commitokkal:
   > *"A konzolos képernyő-frissítés lag-mentesítéséhez kértem segítséget az AI asszisztenstől. Megtanultam, hogy a teljes képernyő újrarajzolása helyett elegendő csak az elhagyott és az új kurzorpozíció celláját frissíteni `Console.SetCursorPosition(x, y)` segítségével, valamint a `PadRight()` és `Substring()` metódusok együttes használatával megakadályozható a menüszövegek átlógása a rajzvászonra."*
 
 * **Tanuló 2 AI Tanulási Naplója:**
-  > *"Az aszinkron hangjelzéshez és a 2D tömbös nyomdák határellenőrzéséhez kértem segítséget. Megértettem, hogy a `Console.Beep()` szinkron hívása megakasztaná a fő ciklust, ezért célszerű azt `Task.Run` háttérszálon futtatni egy rövid védelmi időzítővel (cooldown). Emellett elsajátítottam a `File.ReadAllLines()` tömbjének soronkénti pre-validációját is."*
+  > *"Az aszinkron hangjelzéshez és a 2D tömbös nyomdák határellenőrzéséhez kértem segítséget. Megértettem, hogy a `Console.Beep()` szinkron hívása megakasztaná a fő ciklust, ezért célszerű azt `Task.Run` háttérszálon futtatni egy rövid védelmi időzítővel (cooldown). Emellett elsajátítottam a `File.ReadAllLines()` tömbjének soronkénti pre-validációját is. Ezen  kivul megtanultam a try t és segítséget kértem a szövegek legenerálásában "*
 
 ---
 
