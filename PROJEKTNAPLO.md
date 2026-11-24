@@ -13,8 +13,8 @@ A projektet az útmutatónak megfelelően két fő részre és egyéni funkciók
 
 | Tanuló neve | Elvállalt feladatok és modulok | Saját egyedi funkció |
 | :--- | :--- | :--- |
-| **Tanuló 1** | Menürendszer megvalósítása, Kurzormozgatás a nyilakkal, Állapotjelző panel frissítése, Toll le/fel státusz kezelése, Célzott cellafrissítési logika | **1. Ugrás a középpontba (25, 10)**<br>**2. Vászon teljes törlése** |
-| **Tanuló 2** | Nyomdák (F1–F12) rajzolási logikája, Nyomda határellenőrzése, Minta betöltése `minta.txt` fájlból és pre-validáció, Aszinkron `Beep` kezelés | **3. Vászon vízszintes tükrözése** |
+| **Tasi Léna** | Menürendszer megvalósítása, Kurzormozgatás a nyilakkal, Állapotjelző panel frissítése, Toll le/fel státusz kezelése, Célzott cellafrissítési logika | **1. Ugrás a középpontba (25, 10)**<br>**2. Vászon teljes törlése** |
+| **Sápi Timót** | Nyomdák (F1–F12) rajzolási logikája, Nyomda határellenőrzése, Minta betöltése `minta.txt` fájlból és pre-validáció, Aszinkron `Beep` kezelés | **3. Vászon vízszintes tükrözése** |
 
 ---
 
@@ -68,7 +68,8 @@ A közös munkát a `main` ágon végeztük megbízható és atomi commitokkal:
 
 ## 5. Tesztelési Bejegyzések és Visszajelzések
 
-A tesztelést a mellékelt Tesztjegyzőkönyv alapján végeztük el a tesztelő párossal:
+A tesztelést a mellékelt Tesztjegyzőkönyv alapján végeztük el
+Elkészült több változat a végleges a program.cs ben található le lettek cserélve bizonyos elemek javítva lettek 
 
 * **T01-T04 (Alapvezérlés & Határok):** PASS - A kurzor azonnal, akadásmentesen mozog a nyilakkal. A falaknál a hiba-hangjelzés rögtön megszólal és a rajz nem módosul.
 * **T05 (Toll le/fel & Cellafrissítés):** PASS - A Szóköz gombbal a toll állapot vált. Letett állapotban a mozgás során folyamatos és lag-mentes a rajzolás.
