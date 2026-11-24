@@ -13,47 +13,43 @@ namespace KonzolosRajzolo
     class Program
     {
 
-        // =========================================================================
-        // RAJZOLÓ ALKALMAZÁS - IKT PÁROS PROJEKT (11.F)
-        // Tanult C# ismeretek: Console vezérlés, 2D tömbök, switch, ciklusok,
-        // String/StringBuilder kezelés, File I/O, Hibakezelés és Aszinkron Beep hangjelzések.
-        // =========================================================================
 
-        // Rajzlap konstans méretei (50 oszlop x 20 sor)
+
+        // Rajzlap konstans méretei 
         const int VASZON_SZELESSEG = 50;
         const int VASZON_MAGASSAG = 20;
 
         // Pozicionálás a konzolablakban
-        const int PANEL_SZELESSEG = 24;  // Bal oldali panel szélessége
-        const int CANVAS_OFFSET_X = 26;  // A rajzlap bal felső sarka (kerettel együtt a 25. oszloptól)
-        const int CANVAS_OFFSET_Y = 1;   // A kereten belüli rajzlap első sora
+        const int PANEL_SZELESSEG = 24; 
+        const int CANVAS_OFFSET_X = 26; 
+        const int CANVAS_OFFSET_Y = 1;  
 
         // Alkalmazás állapota
         static char[,] vaszonKarakter = new char[VASZON_MAGASSAG, VASZON_SZELESSEG];
         static ConsoleColor[,] vaszonSzin = new ConsoleColor[VASZON_MAGASSAG, VASZON_SZELESSEG];
 
-        static int kurzorX = 0; // 0 .. 49
-        static int kurzorY = 0; // 0 .. 19
+        static int kurzorX = 0; 
+        static int kurzorY = 0;
         static int elozoKurzorX = 0;
         static int elozoKurzorY = 0;
 
         static char rajzKarakter = '#';
         static ConsoleColor rajzSzin = ConsoleColor.Cyan;
-        static bool eszkozLeteve = false; // false: Felemelve, true: Letéve
+        static bool eszkozLeteve = false;
 
         static bool menuMod = false;
         static int kijeloltMenuIndex = 0;
         static string statuszUzenet = "Üdvözöl a Rajzoló! Nyilak: Mozgás | Szóköz: Toll le/fel";
         static bool fut = true;
 
-        // Beep hangjelzés időzítő (cooldown a beragadás ellen)
+        // Beep hangjelzés időzítő
         static DateTime utolsoBeepIdopont = DateTime.MinValue;
 
         [DllImport("user32.dll")]
         static extern bool MessageBeep(uint uType);
 
 
-        // Használható karakterek és színek listája (a 11.F tananyag alapján)
+        // Használható karakterek és színek listája 
         static readonly char[] valaszthatoKarakterek = new char[] { '#', '*', '@', 'O', '+', 'X', '█', '▒', '░' };
         static readonly ConsoleColor[] valaszthatoSzinek = new ConsoleColor[] {
             ConsoleColor.Cyan, ConsoleColor.Yellow, ConsoleColor.Green,
@@ -62,7 +58,7 @@ namespace KonzolosRajzolo
         static int szinIndex = 0;
         static int karakterIndex = 0;
 
-        // Menüpontok megnevezései (szigorúan 22 karakterre korlátozva)
+        // Menüpontok megnevezései
         static readonly string[] menuPontok = new string[] {
             "1. Karakter váltása",
             "2. Szín váltása",
@@ -77,10 +73,10 @@ namespace KonzolosRajzolo
         static void Main(string[] args)
         {
 
-            // UTF-8 kódolás beállítása a magyar karakterek és Unicode keretek megjelenítéséhez
+z
             Console.OutputEncoding = Encoding.UTF8;
 
-            // Konzol ablak méretének ellenőrzése (legalább 78 oszlop x 24 sor)
+
             if (Console.WindowWidth < 78 || Console.WindowHeight < 24)
             {
                 try
@@ -96,25 +92,24 @@ namespace KonzolosRajzolo
 
             Console.CursorVisible = false;
             VaszonAlaphelyzetbe();
-            KépernyőKirajzolása(); // Kezdeti teljes képernyő kirajzolás
+            KépernyőKirajzolása(); 
 
-            // Fő vezérlési ciklus
+            
             while (fut)
             {
-                // Egy billentyű beolvasása (várakozik a gombnyomásra)
+               
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
                 if (menuMod)
                 {
                     MenüGombKezelés(keyInfo);
-                    KépernyőKirajzolása(); // Menüben a kijelölés váltásakor frissítünk
+                    KépernyőKirajzolása();
                 }
                 else
                 {
                     RajzolóGombKezelés(keyInfo);
 
-                    // LAG MEGSZÜNTETÉSE: Ha felhalmozódtak billentyűk a pufferben (pl. nyomva tartott nyíl),
-                    // mindegyiket azonnal feldolgozzuk újrarajzolás nélkül, és csak a legutolsó pozíciónál frissítünk!
+
                     while (Console.KeyAvailable && !menuMod && fut)
                     {
                         ConsoleKeyInfo extraKey = Console.ReadKey(true);
@@ -130,9 +125,8 @@ namespace KonzolosRajzolo
             Console.WriteLine("A rajzoló program bezárult. Szép napot!");
         }
 
-        // =========================================================================
-        // VÁSZON KEZELÉSE ÉS ALAPHELYZET
-        // =========================================================================
+
+        // VÁSZON KEZELÉSE ÉS ALAPHELYZET:
         static void VaszonAlaphelyzetbe()
         {
             for (int y = 0; y < VASZON_MAGASSAG; y++)
@@ -145,59 +139,57 @@ namespace KonzolosRajzolo
             }
         }
 
-        // =========================================================================
-        // KÉPERNYŐ KIRAJZOLÁSA (Teljes redraw szükség esetén)
-        // =========================================================================
+        // KÉPERNYŐ KIRAJZOLÁSA:
+
         static void KépernyőKirajzolása()
         {
-            // 1. Bal oldali panel (Menü / Állapot)
+       
             PanelKirajzolása();
 
-            // 2. Rajzlap keretének kirajzolása (Unicode Box Drawing)
-            // Felső keret
+
             Console.SetCursorPosition(CANVAS_OFFSET_X - 1, 0);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write('┌' + new string('─', VASZON_SZELESSEG) + '┐');
 
-            // Oldalsó keretek és vászon cellák
+    
             for (int y = 0; y < VASZON_MAGASSAG; y++)
             {
-                // Bal oldali keret
+          
                 Console.SetCursorPosition(CANVAS_OFFSET_X - 1, CANVAS_OFFSET_Y + y);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write('│');
 
-                // Vászon sora
+              
                 for (int x = 0; x < VASZON_SZELESSEG; x++)
                 {
                     EgyCellaKirajzolása(x, y);
                 }
 
-                // Jobb oldali keret
+            
                 Console.SetCursorPosition(CANVAS_OFFSET_X + VASZON_SZELESSEG, CANVAS_OFFSET_Y + y);
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write('│');
             }
 
-            // Alsó keret
+        
             Console.SetCursorPosition(CANVAS_OFFSET_X - 1, CANVAS_OFFSET_Y + VASZON_MAGASSAG);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write('└' + new string('─', VASZON_SZELESSEG) + '┘');
 
-            // 3. Státuszsáv frissítése
+         
             StatuszSavKirajzolasa();
         }
 
-        // =========================================================================
-        // CÉLZOTT CELLA KIRAJZOLÁSA (Részleges, villámgyors frissítés 0 lag-gal)
-        // =========================================================================
+
+        // CÉLZOTT CELLA KIRAJZOLÁSA:
+
         static void EgyCellaKirajzolása(int x, int y)
         {
             Console.SetCursorPosition(CANVAS_OFFSET_X + x, CANVAS_OFFSET_Y + y);
 
             if (x == kurzorX && y == kurzorY)
             {
-                // Kurzor kiemelése (Piros ha toll letéve, Kék ha felemelve)
+            
                 if (eszkozLeteve)
                 {
                     Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -222,9 +214,9 @@ namespace KonzolosRajzolo
             }
         }
 
-        // =========================================================================
-        // STÁTUSZSÁV ÉS PANEL RÉSZLEGES FRISSÍTÉSE
-        // =========================================================================
+
+        // STÁTUSZSÁV ÉS PANEL RÉSZLEGES FRISSÍTÉSE:
+
         static void StatuszSavKirajzolasa()
         {
             Console.SetCursorPosition(0, VASZON_MAGASSAG + 1);
@@ -304,7 +296,7 @@ namespace KonzolosRajzolo
                 Console.SetCursorPosition(0, 14);
                 Console.Write(FormatalSor(" [Esc]: Vissza rajzhoz", PANEL_SZELESSEG));
 
-                // Üres sorok törlése a panel alján
+          
                 for (int row = 15; row <= 20; row++)
                 {
                     Console.SetCursorPosition(0, row);
@@ -385,9 +377,9 @@ namespace KonzolosRajzolo
             return szoveg.PadRight(maxHossz);
         }
 
-        // =========================================================================
-        // VEZÉRLÉS: RAJZOLÓ MÓD
-        // =========================================================================
+  
+        // VEZÉRLÉS: RAJZOLÓ MÓD:
+     
         static void RajzolóGombKezelés(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
@@ -481,7 +473,6 @@ namespace KonzolosRajzolo
 
             statuszUzenet = $"Pozíció: ({kurzorX}, {kurzorY})";
 
-            // Célzott (részleges) villámgyors frissítés - Nincs képernyővillogás, Nincs lag!
             EgyCellaKirajzolása(elozoKurzorX, elozoKurzorY);
             EgyCellaKirajzolása(kurzorX, kurzorY);
             PozicioPanelFrissites();
@@ -494,14 +485,13 @@ namespace KonzolosRajzolo
             vaszonSzin[y, x] = rajzSzin;
         }
 
-        // =========================================================================
-        // NYOMDÁK KEZELÉSE ÉS HATÁRELLENŐRZÉS (F1 - F12)
-        // =========================================================================
+ 
+        // NYOMDÁK KEZELÉSE ÉS HATÁRELLENŐRZÉS (F1 - F12):
+    
         static void NyomdaRányomása(char tipus, int meret)
         {
-            int r = meret / 2; // Sugár: 3->1, 5->2, 7->3
+            int r = meret / 2;
 
-            // ELŐZETES HATÁRELLENŐRZÉS: Ha akárcsak 1 cella is kilóg, nem rajzolunk semmit!
             if (kurzorX - r < 0 || kurzorX + r >= VASZON_SZELESSEG ||
                 kurzorY - r < 0 || kurzorY + r >= VASZON_MAGASSAG)
             {
@@ -511,7 +501,7 @@ namespace KonzolosRajzolo
                 return;
             }
 
-            // Minta kirajzolása a kiválasztott alakzat alapján
+      
             for (int dy = -r; dy <= r; dy++)
             {
                 for (int dx = -r; dx <= r; dx++)
@@ -543,12 +533,10 @@ namespace KonzolosRajzolo
             }
 
             statuszUzenet = $"Nyomda elhelyezve: {tipus} ({meret}x{meret}) a ({kurzorX},{kurzorY}) ponton";
-            KépernyőKirajzolása(); // Nyomda után teljes frissítés
+            KépernyőKirajzolása();
         }
-
-        // =========================================================================
-        // VEZÉRLÉS: MENÜ MÓD
-        // =========================================================================
+        // VEZÉRLÉS: MENÜ MÓD:
+ 
         static void MenüGombKezelés(ConsoleKeyInfo keyInfo)
         {
             switch (keyInfo.Key)
@@ -630,12 +618,12 @@ namespace KonzolosRajzolo
             }
         }
 
-        // =========================================================================
+      
         // MINTA BETÖLTÉSE SZÖVEGFÁJLBÓL ÉS ELLENŐRZÉS
-        // =========================================================================
+ 
         static void MintaBetöltéseFájlból(string fajlNev)
         {
-            // Több lehetséges elérést megvizsgálunk (projektnél és futtatásnál)
+
             string[] probaUtvonalak = new string[] {
                 Path.Combine(AppContext.BaseDirectory, fajlNev),
                 Path.Combine(Directory.GetCurrentDirectory(), fajlNev),
@@ -652,7 +640,7 @@ namespace KonzolosRajzolo
                 }
             }
 
-            // Ha sehol sem található, automatikusan létrehozzuk a mintafájlt egy kedves rajzzal!
+    
             if (eleresiUt == null)
             {
                 eleresiUt = Path.Combine(AppContext.BaseDirectory, fajlNev);
@@ -714,9 +702,8 @@ namespace KonzolosRajzolo
             }
         }
 
-        // =========================================================================
-        // SAJÁT EXTRA FUNKCIÓ: VÍZSZINTES TÜKRÖZÉS
-        // =========================================================================
+        // SAJÁT EXTRA FUNKCIÓ: VÍZSZINTES TÜKRÖZÉS:
+
         static void VászonTükrözéseVízszintesen()
         {
             for (int y = 0; y < VASZON_MAGASSAG; y++)
@@ -736,21 +723,20 @@ namespace KonzolosRajzolo
             }
         }
 
-        // =========================================================================
-        // HANGJELZÉS HIBA ESETÉN (ASZINKRON + COOLDOWN GARANCIA A LAGGOLÁS ELLEN)
-        // =========================================================================
+        // HANGJELZÉS HIBA ESETÉN:
+
 
 
         static void HangJelzésHiba()
         {
-            // Cooldown, hogy nyomva tartott nyílnál ne torlódjon
+       
             if ((DateTime.Now - utolsoBeepIdopont).TotalMilliseconds < 200)
                 return;
             utolsoBeepIdopont = DateTime.Now;
 
             try
             {
-                Console.Beep(800, 120);   // szinkron, pont mint a tesztben
+                Console.Beep(800, 120);  
             }
             catch
             {
